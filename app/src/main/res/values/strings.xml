@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Ambitus</string>
+    <string name="icon_button">1</string>
+    <string name="settings_button">1</string>
+    <string name="battery_label">Akku-Temperatur:</string>
+    <string name="temp_label">Temperatur:</string>
+    <string name="humidity_label">Feuchtigkeit:</string>
+    <string name="pressure_label">Luftdruck:</string>
+    <string name="magnet_label">Magnetfeld:</string>
 </resources>
