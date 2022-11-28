@@ -7,4 +7,18 @@
     <string name="humidity_label">Feuchtigkeit:</string>
     <string name="pressure_label">Luftdruck:</string>
     <string name="magnet_label">Magnetfeld:</string>
+
+    <string name="all_notifications_label">All notifications</string>
+    <string name="reset_all_button">Reset all</string>
+
+    <string name="battery_title">Akku-Temperatur</string>
+    <string name="temp_title">Temperatur</string>
+    <string name="humidity_title">Feuchtigkeit</string>
+    <string name="pressure_title">Luftdruck</string>
+    <string name="magnet_title">Magnetfeld</string>
+
+    <string name="min_label">Min:</string>
+    <string name="max_label">Max:</string>
+    <string name="notifications_label">Notifications</string>
+    <string name="reset_button">Reset</string>
 </resources>
