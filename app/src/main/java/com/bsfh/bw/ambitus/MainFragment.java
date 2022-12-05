@@ -119,7 +119,7 @@ public class MainFragment extends Fragment implements SensorEventListener {
         String text = values[0] + "°C";
         int min = prefs.getInt("battery-min", 5);
         int max = prefs.getInt("battery-max", 50);
-        text += getSuffix(min, max, values[0]);
+        text += validateValue(min, max, values[0]);
         tempValueView.setText(text);
     }
 
@@ -127,7 +127,7 @@ public class MainFragment extends Fragment implements SensorEventListener {
         String text = values[0] + "°C";
         int min = prefs.getInt("temp-min", -5);
         int max = prefs.getInt("temp-max", 30);
-        text += getSuffix(min, max, values[0]);
+        text += validateValue(min, max, values[0]);
         ambientTempValueView.setText(text);
     }
 
@@ -135,7 +135,7 @@ public class MainFragment extends Fragment implements SensorEventListener {
         String text = values[0] + "%";
         int min = prefs.getInt("humidity-min", 10);
         int max = prefs.getInt("humidity-max", 80);
-        text += getSuffix(min, max, values[0]);
+        text += validateValue(min, max, values[0]);
         humidityValueView.setText(text);
     }
 
@@ -143,7 +143,7 @@ public class MainFragment extends Fragment implements SensorEventListener {
         String text = values[0] + " hPa";
         int min = prefs.getInt("pressure-min", 550);
         int max = prefs.getInt("pressure-max", 1240);
-        text += getSuffix(min, max, values[0]);
+        text += validateValue(min, max, values[0]);
         pressureValueView.setText(text);
     }
 
@@ -152,7 +152,7 @@ public class MainFragment extends Fragment implements SensorEventListener {
         magnetValueView.setText(text);
     }
 
-    private String getSuffix(int min, int max, float value) {
+    private String validateValue(int min, int max, float value) {
         if (value < min) {
             return " [TOO LOW!]";
         } else if (value > max) {
