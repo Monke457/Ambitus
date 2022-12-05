@@ -103,7 +103,7 @@ public class SettingsFragment extends Fragment {
 
     private void displayPressurePreferences(SharedPreferences prefs, View view) {
         int min = prefs.getInt("pressure-min", 550);
-        int max = prefs.getInt("pressure-max", 1241);
+        int max = prefs.getInt("pressure-max", 1240);
         TextView minView = view.findViewById(R.id.pressure_min_value);
         TextView maxView = view.findViewById(R.id.pressure_max_value);
         minView.setText(String.valueOf(min));
