@@ -411,8 +411,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="8"
-                            android:autofillHints="8"
+                            android:hint="550"
+                            android:autofillHints="550"
                             android:inputType="number" />
 
                         <TextView
@@ -442,8 +442,8 @@
                             android:layout_height="50dp"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="18"
-                            android:autofillHints="18"
+                            android:hint="1240"
+                            android:autofillHints="1240"
                             android:inputType="number" />
 
                         <TextView

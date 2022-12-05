@@ -2,13 +2,13 @@ package com.bsfh.bw.ambitus;
 
 import static android.content.Context.SENSOR_SERVICE;
 
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.hardware.TriggerEvent;
-import android.hardware.TriggerEventListener;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +20,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.Arrays;
 
 public class MainFragment extends Fragment implements SensorEventListener {
 
@@ -91,18 +89,20 @@ public class MainFragment extends Fragment implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
         switch (event.sensor.getType()) {
             case Sensor.TYPE_TEMPERATURE:
-                updateTempValue(event.values);
+                updateTempValue(event.values, prefs);
                 break;
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
-                updateAmbientTempValue(event.values);
+                updateAmbientTempValue(event.values, prefs);
                 break;
             case Sensor.TYPE_RELATIVE_HUMIDITY:
-                updateHumidityValue(event.values);
+                updateHumidityValue(event.values, prefs);
                 break;
             case Sensor.TYPE_PRESSURE:
-                updatePressureValue(event.values);
+                updatePressureValue(event.values, prefs);
                 break;
             case Sensor.TYPE_MAGNETIC_FIELD:
                 updateMagnetValue(event.values);
@@ -115,28 +115,50 @@ public class MainFragment extends Fragment implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
-    private void updateTempValue(float[] values) {
+    private void updateTempValue(float[] values, SharedPreferences prefs) {
         String text = values[0] + "°C";
+        int min = prefs.getInt("battery-min", 5);
+        int max = prefs.getInt("battery-max", 50);
+        text += getSuffix(min, max, values[0]);
         tempValueView.setText(text);
     }
 
-    private void updateAmbientTempValue(float[] values) {
+    private void updateAmbientTempValue(float[] values, SharedPreferences prefs) {
         String text = values[0] + "°C";
+        int min = prefs.getInt("temp-min", -5);
+        int max = prefs.getInt("temp-max", 30);
+        text += getSuffix(min, max, values[0]);
         ambientTempValueView.setText(text);
     }
 
-    private void updateHumidityValue(float[] values) {
+    private void updateHumidityValue(float[] values, SharedPreferences prefs) {
         String text = values[0] + "%";
+        int min = prefs.getInt("humidity-min", 10);
+        int max = prefs.getInt("humidity-max", 80);
+        text += getSuffix(min, max, values[0]);
         humidityValueView.setText(text);
     }
 
-    private void updatePressureValue(float[] values) {
+    private void updatePressureValue(float[] values, SharedPreferences prefs) {
         String text = values[0] + " hPa";
+        int min = prefs.getInt("pressure-min", 550);
+        int max = prefs.getInt("pressure-max", 1240);
+        text += getSuffix(min, max, values[0]);
         pressureValueView.setText(text);
     }
 
     private void updateMagnetValue(float[] values) {
         String text = values[0] + " μT  " + values[1] + " μT  " + values[2] + " μT";
         magnetValueView.setText(text);
+    }
+
+    private String getSuffix(int min, int max, float value) {
+        if (value < min) {
+            return " [TOO LOW!]";
+        } else if (value > max) {
+            return " [TOO HIGH!]";
+        } else {
+            return " [OKAY]";
+        }
     }
 }
