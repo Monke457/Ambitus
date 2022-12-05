@@ -21,4 +21,6 @@
     <string name="max_label">Max:</string>
     <string name="notifications_label">Notifications</string>
     <string name="reset_button">Reset</string>
+
+    <string name="sensor_unavailable">Sensor unavailable</string>
 </resources>
