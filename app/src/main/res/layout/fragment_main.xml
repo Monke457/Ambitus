@@ -27,7 +27,7 @@
                 android:contentDescription="@string/icon_button" />
 
             <Space
-                android:layout_width="250dp"
+                android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
@@ -52,6 +52,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
                 android:orientation="vertical">
 
                 <TextView
@@ -87,11 +88,27 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/magnet_label"
+                    android:id="@+id/magnet_label_x"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
-                    android:text="@string/magnet_label"
+                    android:text="@string/magnet_label_x"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/magnet_label_y"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="@string/magnet_label_y"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/magnet_label_z"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="@string/magnet_label_z"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -137,7 +154,23 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/magnet_value"
+                    android:id="@+id/magnet_value_x"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="0μT"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/magnet_value_y"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="0μT"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/magnet_value_z"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"

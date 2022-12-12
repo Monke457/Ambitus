@@ -2,6 +2,7 @@ package com.bsfh.bw.ambitus;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -153,15 +154,20 @@ public class SensorService extends Service implements SensorEventListener {
     private void sendNotification(String message) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("My Notification","My Notification", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager manager =getSystemService(NotificationManager.class);
+            NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
 
+            Intent notifyIntent = new Intent(this, MainActivity.class);
+            notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
             NotificationCompat.Builder builder = new NotificationCompat.Builder(SensorService.this,"My Notification");
+            builder.setContentIntent(notifyPendingIntent);
             builder.setContentTitle("Unstable environment!");
             builder.setContentText(message);
             builder.setSmallIcon(R.mipmap.ic_launcher);
             builder.setAutoCancel(true);
-            NotificationManagerCompat managerCompat=NotificationManagerCompat.from(SensorService.this);
+            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(SensorService.this);
             managerCompat.notify(1, builder.build());
         }
     }
