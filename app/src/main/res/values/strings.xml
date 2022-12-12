@@ -6,7 +6,9 @@
     <string name="temp_label">Temperature:</string>
     <string name="humidity_label">Humidity:</string>
     <string name="pressure_label">Air Pressure:</string>
-    <string name="magnet_label">Magnetic Field:</string>
+    <string name="magnet_label_x">Magnetic Field X:</string>
+    <string name="magnet_label_y">Magnetic Field Y:</string>
+    <string name="magnet_label_z">Magnetic Field Z:</string>
 
     <string name="all_notifications_label">All notifications</string>
     <string name="reset_all_button">Reset all</string>
@@ -22,5 +24,5 @@
     <string name="notifications_label">Notifications</string>
     <string name="reset_button">Reset</string>
 
-    <string name="sensor_unavailable">Sensor unavailable</string>
+    <string name="sensor_unavailable">Unavailable</string>
 </resources>

@@ -21,6 +21,8 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Locale;
+
 public class MainFragment extends Fragment implements SensorEventListener {
 
     private SensorManager sensorManager;
@@ -34,7 +36,9 @@ public class MainFragment extends Fragment implements SensorEventListener {
     private TextView ambientTempValueView;
     private TextView humidityValueView;
     private TextView pressureValueView;
-    private TextView magnetValueView;
+    private TextView magnetValueViewX;
+    private TextView magnetValueViewY;
+    private TextView magnetValueViewZ;
 
     @Nullable
     @Override
@@ -50,7 +54,9 @@ public class MainFragment extends Fragment implements SensorEventListener {
         ambientTempValueView = view.findViewById(R.id.temp_value);
         humidityValueView = view.findViewById(R.id.humidity_value);
         pressureValueView = view.findViewById(R.id.pressure_value);
-        magnetValueView = view.findViewById(R.id.magnet_value);
+        magnetValueViewX = view.findViewById(R.id.magnet_value_x);
+        magnetValueViewY = view.findViewById(R.id.magnet_value_y);
+        magnetValueViewZ = view.findViewById(R.id.magnet_value_z);
 
         if (this.getActivity() != null) {
             sensorManager = (SensorManager) this.getActivity().getSystemService(SENSOR_SERVICE);
@@ -64,7 +70,11 @@ public class MainFragment extends Fragment implements SensorEventListener {
             if (ambientTemperatureSensor == null) ambientTempValueView.setText(R.string.sensor_unavailable);
             if (humiditySensor == null) humidityValueView.setText(R.string.sensor_unavailable);
             if (pressureSensor == null) pressureValueView.setText(R.string.sensor_unavailable);
-            if (magnetSensor == null) magnetValueView.setText(R.string.sensor_unavailable);
+            if (magnetSensor == null) {
+                magnetValueViewX.setText(R.string.sensor_unavailable);
+                magnetValueViewY.setText(R.string.sensor_unavailable);
+                magnetValueViewZ.setText(R.string.sensor_unavailable);
+            }
         }
 
         FloatingActionButton settingsButton = view.findViewById(R.id.settings_button);
@@ -89,20 +99,18 @@ public class MainFragment extends Fragment implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-
         switch (event.sensor.getType()) {
             case Sensor.TYPE_TEMPERATURE:
-                updateTempValue(event.values, prefs);
+                updateTempValue(event.values);
                 break;
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
-                updateAmbientTempValue(event.values, prefs);
+                updateAmbientTempValue(event.values);
                 break;
             case Sensor.TYPE_RELATIVE_HUMIDITY:
-                updateHumidityValue(event.values, prefs);
+                updateHumidityValue(event.values);
                 break;
             case Sensor.TYPE_PRESSURE:
-                updatePressureValue(event.values, prefs);
+                updatePressureValue(event.values);
                 break;
             case Sensor.TYPE_MAGNETIC_FIELD:
                 updateMagnetValue(event.values);
@@ -115,50 +123,32 @@ public class MainFragment extends Fragment implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
-    private void updateTempValue(float[] values, SharedPreferences prefs) {
+    private void updateTempValue(float[] values) {
         String text = values[0] + "°C";
-        int min = prefs.getInt("battery-min", 5);
-        int max = prefs.getInt("battery-max", 50);
-        text += validateValue(min, max, values[0]);
         tempValueView.setText(text);
     }
 
-    private void updateAmbientTempValue(float[] values, SharedPreferences prefs) {
+    private void updateAmbientTempValue(float[] values) {
         String text = values[0] + "°C";
-        int min = prefs.getInt("temp-min", -5);
-        int max = prefs.getInt("temp-max", 30);
-        text += validateValue(min, max, values[0]);
         ambientTempValueView.setText(text);
     }
 
-    private void updateHumidityValue(float[] values, SharedPreferences prefs) {
+    private void updateHumidityValue(float[] values) {
         String text = values[0] + "%";
-        int min = prefs.getInt("humidity-min", 10);
-        int max = prefs.getInt("humidity-max", 80);
-        text += validateValue(min, max, values[0]);
         humidityValueView.setText(text);
     }
 
-    private void updatePressureValue(float[] values, SharedPreferences prefs) {
+    private void updatePressureValue(float[] values) {
         String text = values[0] + " hPa";
-        int min = prefs.getInt("pressure-min", 550);
-        int max = prefs.getInt("pressure-max", 1240);
-        text += validateValue(min, max, values[0]);
         pressureValueView.setText(text);
     }
 
     private void updateMagnetValue(float[] values) {
-        String text = values[0] + " μT  " + values[1] + " μT  " + values[2] + " μT";
-        magnetValueView.setText(text);
-    }
-
-    private String validateValue(int min, int max, float value) {
-        if (value < min) {
-            return " [TOO LOW!]";
-        } else if (value > max) {
-            return " [TOO HIGH!]";
-        } else {
-            return " [OKAY]";
-        }
+        String textX = String.format(Locale.ENGLISH, "%.2f", values[0]) + " μT";
+        String textY =  String.format(Locale.ENGLISH, "%.2f", values[1]) + " μT";
+        String textZ =  String.format(Locale.ENGLISH, "%.2f", values[2]) + " μT";
+        magnetValueViewX.setText(textX);
+        magnetValueViewY.setText(textY);
+        magnetValueViewZ.setText(textZ);
     }
 }

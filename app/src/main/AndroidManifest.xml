@@ -24,11 +24,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".SettingsFragment"
-            android:exported="true">
-        </activity>
-
         <service android:name=".SensorService"/>
     </application>
 
